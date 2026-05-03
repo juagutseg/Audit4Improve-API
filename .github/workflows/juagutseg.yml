@@ -7,12 +7,12 @@ on:
   workflow_dispatch: 
 
 jobs:
-  gestion-proyectos:
+  gestion-automatica:
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
-      - name: Bienvenida a nuevos Issues
+      - name: Bienvenida personalizada (Accion Distinta)
         if: github.event_name == 'issues'
         uses: actions/github-script@v6
         with:
@@ -21,11 +21,10 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '¡Hola @' + context.actor + '! Gracias por abrir este Issue en el proyecto de juagutseg. Un administrador lo revisará pronto.'
+              body: '¡Hola @' + context.actor + '! Gracias por abrir este issue en el fork de **juagutseg**. Automatización ejecutada correctamente.'
             })
 
-      - name: Log de movimiento o ejecución manual
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'project_card'
+      - name: Registro en el Log
         run: |
-          echo "Acción ejecutada por el usuario: ${{ github.actor }}"
           echo "Evento disparador: ${{ github.event_name }}"
+          echo "Usuario: ${{ github.actor }}"
